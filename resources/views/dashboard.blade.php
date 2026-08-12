@@ -12,11 +12,11 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="bg-white overflow-hidden shadow-sm rounded-lg border-t-4 border-[#0EA5B7] p-4">
             <p class="text-sm text-gray-500">This Week's Reports</p>
-            <p class="text-2xl font-bold text-[#1E2A78]">{{ $weeklyCount ?? 0 }}</p>
+           <p class="text-2xl font-bold text-[#1E2A78]">{{ $thisWeekCount ?? 0 }}</p>
         </div>
         <div class="bg-white overflow-hidden shadow-sm rounded-lg border-t-4 border-[#0EA5B7] p-4">
             <p class="text-sm text-gray-500">This Month's Reports</p>
-            <p class="text-2xl font-bold text-[#1E2A78]">{{ $monthlyCount ?? 0 }}</p>
+            <p class="text-2xl font-bold text-[#1E2A78]">{{ $thisMonthCount ?? 0 }}</p>
         </div>
         <div class="bg-white overflow-hidden shadow-sm rounded-lg border-t-4 border-[#FF9F1C] p-4">
             <p class="text-sm text-gray-500">Department</p>
