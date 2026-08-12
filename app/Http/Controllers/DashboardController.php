@@ -32,7 +32,7 @@ class DashboardController extends Controller
                 ->take(5)
                 ->get();
         }
-
+        dd($internship->id, $thisWeekCount, $thisMonthCount, now(), now()->startOfWeek(), now()->endOfWeek());
         return view('dashboard', compact('internship', 'thisWeekCount', 'thisMonthCount', 'recentEntries'));
     }
 
