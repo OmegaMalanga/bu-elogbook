@@ -9,7 +9,7 @@
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
 
             {{-- Stat cards --}}
-            <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div class="grid grid-cols-1 md:grid-cols-5 gap-4 mb-6">
                 <div class="bg-white overflow-hidden shadow-sm rounded-lg border-t-4 border-[#0EA5B7] p-4">
                     <p class="text-sm text-gray-500">Total Reports</p>
                     <p class="text-2xl font-bold text-[#1E2A78]">{{ $totalCount }}</p>
@@ -21,6 +21,10 @@
                 <div class="bg-white overflow-hidden shadow-sm rounded-lg border-t-4 border-[#FF9F1C] p-4">
                     <p class="text-sm text-gray-500">Submitted</p>
                     <p class="text-2xl font-bold text-[#1E2A78]">{{ $submittedCount }}</p>
+                </div>
+                <div class="bg-white overflow-hidden shadow-sm rounded-lg border-t-4 border-[#0EA5B7]/40 p-4">
+                    <p class="text-sm text-gray-500">Company Reviewed</p>
+                    <p class="text-2xl font-bold text-[#1E2A78]">{{ $companyReviewedCount }}</p>
                 </div>
                 <div class="bg-white overflow-hidden shadow-sm rounded-lg border-t-4 border-[#0EA5B7] p-4">
                     <p class="text-sm text-gray-500">Reviewed</p>
@@ -39,6 +43,7 @@
                             <option value="">All Statuses</option>
                             <option value="draft" @selected(request('status') === 'draft')>Draft</option>
                             <option value="submitted" @selected(request('status') === 'submitted')>Submitted</option>
+                            <option value="company_reviewed" @selected(request('status') === 'company_reviewed')>Company Reviewed</option>
                             <option value="reviewed" @selected(request('status') === 'reviewed')>Reviewed</option>
                         </select>
                     </div>
@@ -76,10 +81,12 @@
                             @if ($entry->status === 'draft')
                                 <span class="px-2 py-1 text-xs rounded-full bg-slate-200 text-slate-700">Draft</span>
                             @elseif ($entry->status === 'submitted')
-                                <span class="px-2 py-1 text-xs rounded-full bg-[#FF9F1C]/20 text-[#B96A00]">Submitted</span>
-                            @elseif ($entry->status === 'reviewed')
-                                <span class="px-2 py-1 text-xs rounded-full bg-[#0EA5B7]/20 text-[#0B7A87]">Reviewed</span>
-                            @endif
+                            <span class="px-2 py-1 text-xs rounded-full bg-[#FF9F1C]/20 text-[#B96A00]">Submitted</span>
+                             @elseif ($entry->status === 'company_reviewed')
+                            <span class="px-2 py-1 text-xs rounded-full bg-blue-100 text-blue-700">Company Reviewed</span>
+                             @elseif ($entry->status === 'reviewed')
+                            <span class="px-2 py-1 text-xs rounded-full bg-[#0EA5B7]/20 text-[#0B7A87]">Reviewed</span>
+                        @endif
                         </div>
 
                         <p class="text-sm text-gray-500 mb-1">Operations Carried Out:</p>

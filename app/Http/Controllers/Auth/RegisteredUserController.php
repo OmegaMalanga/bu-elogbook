@@ -24,10 +24,7 @@ class RegisteredUserController extends Controller
     {
         return view('auth.register', [
             'departments' => \App\Models\Department::orderBy('name')->get(),
-            'universitySupervisors' => \App\Models\User::role('university_supervisor')
-                ->whereNotNull('department_id')
-                ->orderBy('name')
-                ->get(['id', 'name', 'department_id']),
+            
         ]);
     }
 
@@ -47,18 +44,7 @@ class RegisteredUserController extends Controller
         'company_name' => ['required', 'string', 'max:255'],
         'pending_company_supervisor_name' => ['nullable', 'string', 'max:255'],
         'pending_company_supervisor_email' => ['nullable', 'string', 'lowercase', 'email', 'max:255'],
-        'university_supervisor_id' => [
-            'nullable',
-            'exists:users,id',
-            function ($attribute, $value, $fail) use ($request) {
-                if ($value) {
-                    $supervisor = \App\Models\User::find($value);
-                    if (! $supervisor || (int) $supervisor->department_id !== (int) $request->department_id) {
-                        $fail('The selected university supervisor does not belong to the chosen department.');
-                    }
-                }
-            },
-        ],
+        
     ]);
 
     $user = User::create([
@@ -75,7 +61,7 @@ class RegisteredUserController extends Controller
         'year_of_study' => $request->year_of_study,
         'company_name' => $request->company_name,
         'pending_company_supervisor_name' => $request->pending_company_supervisor_name,
-        'university_supervisor_id' => $request->university_supervisor_id,
+        
     ]);
 
     // Company supervisor: match existing account by email, or queue an invite
@@ -107,12 +93,7 @@ class RegisteredUserController extends Controller
 
     event(new Registered($user));
 
-    if ($request->university_supervisor_id) {
-        $supervisor = User::find($request->university_supervisor_id);
-        \Illuminate\Support\Facades\Mail::to($supervisor->email)
-            ->send(new \App\Mail\UniversitySupervisorAssigned($supervisor, $user));
-    }
-
+   
     Auth::login($user);
 
     return redirect(route('dashboard', absolute: false));

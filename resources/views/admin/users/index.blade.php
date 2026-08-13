@@ -39,6 +39,12 @@
                         <a href="{{ route('admin.users.index') }}" class="text-sm text-[#0EA5B7] hover:underline mb-2">Clear</a>
                     @endif
                 </form>
+                <div class="mb-4">
+                <a href="{{ route('admin.users.create') }}"
+                    class="inline-block px-4 py-2 rounded-md font-semibold text-white bg-gradient-to-r from-[#FF9F1C] to-[#0EA5B7]">
+                    + Add New User
+                </a>
+            </div>
             </div>
 
             <div class="bg-white overflow-x-auto shadow-sm sm:rounded-lg p-6">

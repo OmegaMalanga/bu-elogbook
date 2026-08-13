@@ -82,12 +82,13 @@ if ($duplicateExists) {
     $allEntries = $internship ? $internship->logEntries() : null;
     $totalCount = $allEntries ? $allEntries->count() : 0;
     $draftCount = $allEntries ? (clone $allEntries)->where('status', 'draft')->count() : 0;
-    $submittedCount = $allEntries ? (clone $allEntries)->where('status', 'submitted')->count() : 0;
-    $reviewedCount = $allEntries ? (clone $allEntries)->where('status', 'reviewed')->count() : 0;
+        $submittedCount = $allEntries ? (clone $allEntries)->where('status', 'submitted')->count() : 0;
+        $companyReviewedCount = $allEntries ? (clone $allEntries)->where('status', 'company_reviewed')->count() : 0;
+        $reviewedCount = $allEntries ? (clone $allEntries)->where('status', 'reviewed')->count() : 0;
 
-    return view('log-entries.my-reports', compact(
-        'entries', 'totalCount', 'draftCount', 'submittedCount', 'reviewedCount'
-    ));
+        return view('log-entries.my-reports', compact(
+            'entries', 'totalCount', 'draftCount', 'submittedCount', 'companyReviewedCount', 'reviewedCount'
+        ));
 }
 public function exportPdf(Request $request)
     {

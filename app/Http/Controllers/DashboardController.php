@@ -36,26 +36,35 @@ class DashboardController extends Controller
         return view('dashboard', compact('internship', 'thisWeekCount', 'thisMonthCount', 'recentEntries'));
     }
 
-    if ($user->hasRole('company_supervisor') || $user->hasRole('university_supervisor')) {
-        $pendingEntries = \App\Models\LogEntry::where('status', 'submitted')
-            ->whereHas('internship', function ($query) use ($user) {
-                $query->where('company_supervisor_id', $user->id)
-                      ->orWhere('university_supervisor_id', $user->id);
-            })
-            ->with('internship.student')
-            ->orderBy('date', 'desc')
-            ->take(5)
-            ->get();
+   if ($user->hasRole('company_supervisor') || $user->hasRole('university_supervisor')) {
+            $query = \App\Models\LogEntry::with('internship.student')->orderBy('date', 'desc');
 
-        $pendingCount = $pendingEntries->count();
+            if ($user->hasRole('company_supervisor')) {
+                $query->where('status', 'submitted')
+                    ->whereHas('internship', function ($q) use ($user) {
+                        $q->where('company_supervisor_id', $user->id);
+                    });
+            } else {
+                $query->where('status', 'company_reviewed')
+                    ->whereHas('internship', function ($q) use ($user) {
+                        $q->where('university_supervisor_id', $user->id);
+                    });
+            }
 
-        $internships = \App\Models\Internship::where('company_supervisor_id', $user->id)
-            ->orWhere('university_supervisor_id', $user->id)
-            ->with(['student', 'evaluation'])
-            ->get();
+            $reviewableEntries = $query->get()
+                ->filter(fn ($entry) => $entry->isReviewable())
+                ->values();
 
-        return view('dashboard', compact('pendingEntries', 'pendingCount', 'internships'));
-    }
+            $pendingCount = $reviewableEntries->count();
+            $pendingEntries = $reviewableEntries->take(5);
+
+            $internships = \App\Models\Internship::where('company_supervisor_id', $user->id)
+                ->orWhere('university_supervisor_id', $user->id)
+                ->with(['student', 'evaluation'])
+                ->get();
+
+            return view('dashboard', compact('pendingEntries', 'pendingCount', 'internships'));
+        }
 
    if ($user->hasRole('admin')) {
     $departments = \App\Models\Department::orderBy('name')->get();

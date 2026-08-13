@@ -25,4 +25,13 @@ class LogEntry extends Model
     {
         return $this->hasMany(Review::class);
     }
+    public function isReviewable(): bool
+    {
+        $fridayOfWeek = \Carbon\Carbon::parse($this->date)
+            ->startOfWeek(\Carbon\Carbon::MONDAY)
+            ->addDays(4)
+            ->startOfDay();
+
+        return now()->startOfDay()->gte($fridayOfWeek);
+    }
 }

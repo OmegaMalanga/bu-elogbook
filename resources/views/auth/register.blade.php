@@ -112,21 +112,7 @@
     @enderror
 </div>
 
-        {{-- University Supervisor --}}
-<div class="mt-4">
-    <label for="university_supervisor_id" class="block text-sm font-semibold text-[#1E2A78] mb-1">University Supervisor</label>
-    <select id="university_supervisor_id" name="university_supervisor_id"
-        class="w-full rounded-md border border-slate-300 bg-slate-50 px-3 py-2 text-sm
-            focus:border-[#0EA5B7] focus:ring-2 focus:ring-[#0EA5B7]/40 focus:outline-none">
-        <option value="">— Select your department first —</option>
-    </select>
-    <p id="no_supervisors_note" class="mt-1 text-sm text-slate-500 hidden">
-        No university supervisors registered yet for this department — contact admin.
-    </p>
-    @error('university_supervisor_id')
-        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-    @enderror
-</div>
+        
 
         {{-- Actions --}}
         <div class="mt-6 flex items-center justify-between">
@@ -141,51 +127,5 @@
             </button>
         </div>
     </form>
-    <script>
-    const universitySupervisors = @json($universitySupervisors);
-    const oldDepartmentId = @json(old('department_id'));
-    const oldSupervisorId = @json(old('university_supervisor_id'));
-
-    function populateSupervisors(departmentId) {
-        const select = document.getElementById('university_supervisor_id');
-        const note = document.getElementById('no_supervisors_note');
-        select.innerHTML = '';
-
-        if (!departmentId) {
-            select.innerHTML = '<option value="">— Select your department first —</option>';
-            note.classList.add('hidden');
-            return;
-        }
-
-        const matches = universitySupervisors.filter(s => String(s.department_id) === String(departmentId));
-
-        if (matches.length === 0) {
-            select.innerHTML = '<option value="">— None available —</option>';
-            note.classList.remove('hidden');
-            return;
-        }
-
-        note.classList.add('hidden');
-        select.innerHTML = '<option value="">— Select a supervisor —</option>';
-        matches.forEach(s => {
-            const opt = document.createElement('option');
-            opt.value = s.id;
-            opt.textContent = s.name;
-            if (oldSupervisorId && String(oldSupervisorId) === String(s.id)) {
-                opt.selected = true;
-            }
-            select.appendChild(opt);
-        });
-    }
-
-    document.getElementById('department_id').addEventListener('change', function () {
-        populateSupervisors(this.value);
-    });
-
-    document.addEventListener('DOMContentLoaded', function () {
-        if (oldDepartmentId) {
-            populateSupervisors(oldDepartmentId);
-        }
-    });
-</script>
+ 
 </x-guest-layout>

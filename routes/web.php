@@ -34,6 +34,8 @@ require __DIR__.'/auth.php';
 Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
     Route::patch('/users/{user}/role', [UserController::class, 'updateRole'])->name('admin.users.updateRole');
+    Route::get('/users/create', [UserController::class, 'create'])->name('admin.users.create');
+    Route::post('/users', [UserController::class, 'store'])->name('admin.users.store');
     Route::get('/internships', [App\Http\Controllers\Admin\InternshipController::class, 'index'])->name('admin.internships.index');
     Route::patch('/internships/{internship}', [App\Http\Controllers\Admin\InternshipController::class, 'update'])->name('admin.internships.update');    
 });
