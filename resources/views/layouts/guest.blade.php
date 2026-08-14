@@ -35,13 +35,8 @@
                 Busitema University · Faculty of Engineering
             </div>
 
-            {{-- Signature schematic icon --}}
-            <svg width="56" height="56" viewBox="0 0 64 64" fill="none" class="mb-4">
-                <rect x="10" y="6" width="44" height="52" rx="2" stroke="#FFFFFF" stroke-width="1.5"/>
-                <path d="M18 18h28M18 26h28M18 34h18" stroke="#FF9F1C" stroke-width="1.5" stroke-linecap="round"/>
-                <circle cx="20" cy="44" r="2" fill="#FF9F1C"/>
-                <path d="M26 44h20" stroke="#FFFFFF" stroke-width="1.5" stroke-linecap="round"/>
-            </svg>
+           {{-- Logo --}}
+                <img src="{{ asset('images/logo.svg') }}" alt="BU E-Logbook" class="h-16 w-16 mb-4">
 
             <h1 class="font-display text-4xl font-bold text-white leading-tight mb-3">
                 BU E-Logbook

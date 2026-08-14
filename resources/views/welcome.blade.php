@@ -55,6 +55,7 @@
 
         {{-- Hero --}}
         <div class="flex-1 flex flex-col items-center justify-center text-center px-6 py-16">
+            <img src="{{ asset('images/logo.svg') }}" alt="BU E-Logbook" class="h-24 w-24 mb-4">
             <div class="inline-flex items-center gap-2 text-[#FFC46B] font-mono text-sm tracking-widest uppercase mb-6">
                 Busitema University · Faculty of Engineering
             </div>

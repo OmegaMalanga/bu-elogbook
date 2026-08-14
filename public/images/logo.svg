@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg"
+     viewBox="0 0 1000 1000"
+     width="1000" height="1000">
+  <title>Busitema University Faculty of Engineering Logo</title>
+  <desc>Transparent vector logo with blue gear, yellow center and black atom symbol.</desc>
+
+  <!-- Blue gear -->
+  <g fill="#2871B5">
+    <circle cx="500" cy="500" r="335"/>
+    <g transform="translate(500 500)">
+      <g transform="rotate(0) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(22.5) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(45) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(67.5) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(90) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(112.5) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(135) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(157.5) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(180) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(202.5) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(225) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(247.5) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(270) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(292.5) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(315) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+      <g transform="rotate(337.5) translate(0 -382)">
+        <rect x="-38" y="-52" width="76" height="104" rx="18"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- Yellow center -->
+  <circle cx="500" cy="500" r="300" fill="#FCCD30"/>
+
+  <!-- Atom -->
+  <g fill="none" stroke="#111111" stroke-width="25" stroke-linecap="round">
+    <ellipse cx="500" cy="500" rx="235" ry="105"/>
+    <ellipse cx="500" cy="500" rx="235" ry="105" transform="rotate(60 500 500)"/>
+    <ellipse cx="500" cy="500" rx="235" ry="105" transform="rotate(120 500 500)"/>
+  </g>
+  <circle cx="500" cy="500" r="42" fill="#111111"/>
+</svg>
