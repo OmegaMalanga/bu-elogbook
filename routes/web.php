@@ -20,6 +20,7 @@ Route::middleware('auth')->group(function () {
     Route::patch('/log-entries/{logEntry}', [App\Http\Controllers\LogEntryController::class, 'update'])->name('log-entries.update');
     Route::get('/reports', [App\Http\Controllers\LogEntryController::class, 'myReports'])->name('log-entries.my-reports');
     Route::get('/reports/export-pdf', [App\Http\Controllers\LogEntryController::class, 'exportPdf'])->name('log-entries.export-pdf');
+    Route::post('/weekly-diagrams', [App\Http\Controllers\WeeklyDiagramController::class, 'store'])->name('weekly-diagrams.store');
     Route::get('/reviews', [App\Http\Controllers\ReviewController::class, 'index'])->name('reviews.index');
     Route::get('/reviews/{logEntry}', [App\Http\Controllers\ReviewController::class, 'show'])->name('reviews.show');
     Route::post('/reviews/{logEntry}', [App\Http\Controllers\ReviewController::class, 'store'])->name('reviews.store');

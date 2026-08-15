@@ -17,6 +17,31 @@
                     </ul>
                 </div>
             @endif
+            @if ($logEntry->flagged_duplicate)
+                <div class="mb-4 p-4 bg-yellow-100 text-yellow-800 rounded">
+                    ⚠ This report is similar to a previous entry{{ $logEntry->similarEntry ? ' dated ' . $logEntry->similarEntry->date : '' }}. Please review carefully before approving.
+                </div>
+             @endif
+             @php
+            $weekStart = \App\Models\WeeklyDiagram::currentWeekStart();
+            $weeklyDiagram = \App\Models\WeeklyDiagram::where('internship_id', $logEntry->internship_id)
+                ->where('week_start_date', \Carbon\Carbon::parse($logEntry->date)->startOfWeek(\Carbon\Carbon::MONDAY))
+                ->first();
+        @endphp
+
+        <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 mb-6">
+            <h3 class="text-lg font-semibold mb-4">This Week's Diagram</h3>
+            @if ($weeklyDiagram)
+                <p class="text-gray-600 mb-2">{{ $weeklyDiagram->original_filename }} — uploaded {{ $weeklyDiagram->uploaded_at->format('d M Y, H:i') }}</p>
+                @if (Str::endsWith($weeklyDiagram->file_path, ['.jpg', '.jpeg', '.png']))
+                    <img src="{{ asset('storage/' . $weeklyDiagram->file_path) }}" class="max-w-xs rounded border border-gray-200">
+                @else
+                    <a href="{{ asset('storage/' . $weeklyDiagram->file_path) }}" target="_blank" class="text-[#0EA5B7] hover:underline">View uploaded PDF</a>
+                @endif
+            @else
+                <p class="text-gray-500">No diagram uploaded for this week yet.</p>
+            @endif
+        </div>
 
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 mb-6">
                 <h3 class="text-lg font-semibold mb-4">

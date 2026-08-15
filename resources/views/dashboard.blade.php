@@ -88,6 +88,38 @@
             </div>
         @endif
     </div>
+    <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 mt-6">
+                <h3 class="text-lg font-semibold text-[#1E2A78] mb-4">This Week's Diagram</h3>
+
+                @if (session('diagram_success'))
+                    <div class="mb-4 p-4 bg-green-100 text-green-700 rounded">
+                        {{ session('diagram_success') }}
+                    </div>
+                @endif
+
+                @if ($weeklyDiagram)
+                    <p class="text-gray-600 mb-2">Uploaded: {{ $weeklyDiagram->original_filename }} ({{ $weeklyDiagram->uploaded_at->format('d M Y, H:i') }})</p>
+                    @if (Str::endsWith($weeklyDiagram->file_path, ['.jpg', '.jpeg', '.png']))
+                        <img src="{{ asset('storage/' . $weeklyDiagram->file_path) }}" class="max-w-xs rounded border border-gray-200 mb-4">
+                    @else
+                        <a href="{{ asset('storage/' . $weeklyDiagram->file_path) }}" target="_blank" class="text-[#0EA5B7] hover:underline mb-4 inline-block">View uploaded PDF</a>
+                    @endif
+                    <p class="text-sm text-gray-500 mb-2">Uploading a new file will replace this week's diagram.</p>
+                @else
+                    <p class="text-gray-500 mb-4">No diagram uploaded for this week yet. Upload a drawing or diagram summarizing something from this week's work.</p>
+                @endif
+
+                <form method="POST" action="{{ route('weekly-diagrams.store') }}" enctype="multipart/form-data">
+                    @csrf
+                    <input type="file" name="diagram" accept=".jpg,.jpeg,.png,.pdf" class="mb-2" required>
+                    @error('diagram')
+                        <p class="text-red-600 text-sm mb-2">{{ $message }}</p>
+                    @enderror
+                    <button type="submit" class="px-4 py-2 rounded-md font-semibold text-white bg-gradient-to-r from-[#1E2A78] to-[#0EA5B7]">
+                        {{ $weeklyDiagram ? 'Replace Diagram' : 'Upload Diagram' }}
+                    </button>
+                </form>
+            </div>
 @endrole
             @role('company_supervisor')
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -122,7 +154,14 @@
                 <tbody>
                     @foreach ($pendingEntries as $entry)
                         <tr class="border-b border-gray-200">
-                            <td class="py-3 text-gray-800">{{ $entry->date }}</td>
+                           <td class="py-3 text-gray-800">
+                                {{ $entry->date }}
+                                @if ($entry->flagged_duplicate)
+                                        <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800" title="This report is similar to a previous entry">
+                                             ⚠ Similar
+                                        </span>
+                                @endif
+                            </td>
                             <td class="py-3 text-gray-800">{{ $entry->internship->student->name }}</td>
                             <td class="py-3 text-gray-800">
                                 {{ Str::limit($entry->operations_carried_out, 50) }}
@@ -210,7 +249,14 @@
                 <tbody>
                     @foreach ($pendingEntries as $entry)
                         <tr class="border-b border-gray-200">
-                            <td class="py-3 text-gray-800">{{ $entry->date }}</td>
+                           <td class="py-3 text-gray-800">
+                                {{ $entry->date }}
+                                @if ($entry->flagged_duplicate)
+                                    <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800" title="This report is similar to a previous entry">
+                                     ⚠ Similar
+                                    </span>
+                                 @endif
+                            </td>
                             <td class="py-3 text-gray-800">{{ $entry->internship->student->name }}</td>
                             <td class="py-3 text-gray-800">
                                 {{ Str::limit($entry->operations_carried_out, 50) }}

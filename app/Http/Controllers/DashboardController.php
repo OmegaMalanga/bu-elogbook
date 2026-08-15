@@ -31,9 +31,15 @@ class DashboardController extends Controller
                 ->orderBy('date', 'desc')
                 ->take(5)
                 ->get();
-        }
+                $weeklyDiagram = \App\Models\WeeklyDiagram::where('internship_id', $internship->id)
+                    ->where('week_start_date', \App\Models\WeeklyDiagram::currentWeekStart())
+                    ->first();
+            } else {
+                $weeklyDiagram = null;
+            }
+        
        
-        return view('dashboard', compact('internship', 'thisWeekCount', 'thisMonthCount', 'recentEntries'));
+        return view('dashboard', compact('internship', 'thisWeekCount', 'thisMonthCount', 'recentEntries','weeklyDiagram'));
     }
 
    if ($user->hasRole('company_supervisor') || $user->hasRole('university_supervisor')) {

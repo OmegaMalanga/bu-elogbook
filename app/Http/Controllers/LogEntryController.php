@@ -46,8 +46,14 @@ if ($duplicateExists) {
     ]);
 }
 
-        $validated['internship_id'] = $internship->id;
+       $validated['internship_id'] = $internship->id;
         $validated['status'] = $request->input('action') === 'submit' ? 'submitted' : 'draft';
+
+        if ($validated['status'] === 'submitted') {
+            $duplicateCheck = LogEntry::checkForDuplicate($internship->id, $validated['operations_carried_out']);
+            $validated['flagged_duplicate'] = $duplicateCheck['flagged'];
+            $validated['similar_to_log_entry_id'] = $duplicateCheck['similar_to_log_entry_id'];
+        }
 
         LogEntry::create($validated);
 
@@ -172,9 +178,15 @@ public function update(Request $request, LogEntry $logEntry)
         ]);
     }
 
-    $validated['status'] = $request->input('action') === 'submit' ? 'submitted' : 'draft';
+   $validated['status'] = $request->input('action') === 'submit' ? 'submitted' : 'draft';
 
-    $logEntry->update($validated);
+        if ($validated['status'] === 'submitted') {
+            $duplicateCheck = LogEntry::checkForDuplicate($internship->id, $validated['operations_carried_out'], $logEntry->id);
+            $validated['flagged_duplicate'] = $duplicateCheck['flagged'];
+            $validated['similar_to_log_entry_id'] = $duplicateCheck['similar_to_log_entry_id'];
+        }
+
+        $logEntry->update($validated);
 
     return redirect()->route('dashboard')
         ->with('success', $validated['status'] === 'submitted'

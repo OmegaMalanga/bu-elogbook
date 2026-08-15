@@ -31,7 +31,14 @@
                         <tbody>
                             @foreach ($logEntries as $entry)
                                 <tr class="border-b">
-                                    <td class="py-3">{{ $entry->date }}</td>
+                                    <td class="py-3">
+                                        {{ $entry->date }}
+                                        @if ($entry->flagged_duplicate)
+                                            <span class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-medium bg-yellow-100 text-yellow-800" title="This report is similar to a previous entry">
+                                                    ⚠ Similar
+                                             </span>
+                                         @endif
+                                     </td>
                                     <td class="py-3">{{ $entry->internship->student->name }}</td>
                                     <td class="py-3">{{ Str::limit($entry->operations_carried_out, 50) }}</td>
                                     <td class="py-3">
