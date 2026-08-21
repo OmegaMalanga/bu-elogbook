@@ -312,6 +312,90 @@
             </div>
 @endrole
 
+@role('department_admin')
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+    <div class="bg-white overflow-hidden shadow-sm rounded-lg border-t-4 border-[#1E2A78] p-6">
+        <p class="text-sm text-gray-500">Department</p>
+        <p class="text-lg font-semibold text-[#1E2A78]">{{ $department->name ?? 'Not set' }}</p>
+    </div>
+    <div class="bg-white overflow-hidden shadow-sm rounded-lg border-t-4 border-[#1E2A78] p-6">
+        <p class="text-sm text-gray-500">Total Students</p>
+        <p class="text-2xl font-bold text-[#1E2A78]">{{ $totalStudents }}</p>
+    </div>
+    <div class="bg-white overflow-hidden shadow-sm rounded-lg border-t-4 border-[#1E2A78] p-6">
+        <p class="text-sm text-gray-500">Unassigned Supervisors</p>
+        <p class="text-2xl font-bold text-[#1E2A78]">{{ $unassignedCount }}</p>
+    </div>
+</div>
+
+<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 mt-6">
+    <h3 class="text-lg font-semibold text-[#1E2A78] mb-4">Year 2 Students — {{ $department->name ?? 'Your Department' }}</h3>
+
+    @if ($year2Internships->isEmpty())
+        <p class="text-gray-500">No Year 2 students currently assigned to your department.</p>
+    @else
+        <table class="w-full text-left">
+            <thead>
+                <tr class="border-b border-gray-200">
+                    <th class="pb-2 text-sm text-gray-500">Student</th>
+                    <th class="pb-2 text-sm text-gray-500">University Supervisor</th>
+                    <th class="pb-2 text-sm text-gray-500">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($year2Internships as $internship)
+                    <tr class="border-b border-gray-200">
+                        <td class="py-3 text-gray-800">{{ $internship->student->name }}</td>
+                        <td class="py-3 text-gray-800">
+                            {{ $internship->universitySupervisor->name ?? 'Not assigned' }}
+                        </td>
+                        <td class="py-3">
+                            <a href="{{ route('department.internships.index') }}"
+                                class="px-3 py-1 rounded-md font-semibold text-white bg-gradient-to-r from-[#FF9F1C] to-[#0EA5B7]">
+                                Assign
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
+</div>
+
+<div class="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 mt-6">
+    <h3 class="text-lg font-semibold text-[#1E2A78] mb-4">Year 3 Students — {{ $department->name ?? 'Your Department' }}</h3>
+
+    @if ($year3Internships->isEmpty())
+        <p class="text-gray-500">No Year 3 students currently assigned to your department.</p>
+    @else
+        <table class="w-full text-left">
+            <thead>
+                <tr class="border-b border-gray-200">
+                    <th class="pb-2 text-sm text-gray-500">Student</th>
+                    <th class="pb-2 text-sm text-gray-500">University Supervisor</th>
+                    <th class="pb-2 text-sm text-gray-500">Action</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach ($year3Internships as $internship)
+                    <tr class="border-b border-gray-200">
+                        <td class="py-3 text-gray-800">{{ $internship->student->name }}</td>
+                        <td class="py-3 text-gray-800">
+                            {{ $internship->universitySupervisor->name ?? 'Not assigned' }}
+                        </td>
+                        <td class="py-3">
+                            <a href="{{ route('department.internships.index') }}"
+                                class="px-3 py-1 rounded-md font-semibold text-white bg-gradient-to-r from-[#FF9F1C] to-[#0EA5B7]">
+                                Assign
+                            </a>
+                        </td>
+                    </tr>
+                @endforeach
+            </tbody>
+        </table>
+    @endif
+</div>
+@endrole
           @role('admin')
     <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
         <div class="bg-white overflow-hidden shadow-sm rounded-lg border-t-4 border-[#0EA5B7] p-6">

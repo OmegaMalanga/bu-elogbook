@@ -114,27 +114,27 @@
             @enderror
         </div>
 
-        {{-- Company Supervisor --}}
-<div class="mt-4">
-    <label for="pending_company_supervisor_name" class="block text-sm font-semibold text-[#1E2A78] mb-1">Company Supervisor Name <span class="font-normal text-slate-400">(optional)</span></label>
-    <input id="pending_company_supervisor_name" type="text" name="pending_company_supervisor_name" value="{{ old('pending_company_supervisor_name') }}"
-        class="w-full rounded-md border border-slate-300 bg-slate-50 px-3 py-2 text-sm
-            focus:border-[#0EA5B7] focus:ring-2 focus:ring-[#0EA5B7]/40 focus:outline-none">
-    @error('pending_company_supervisor_name')
-        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-    @enderror
-</div>
+               {{-- Company Supervisor --}}
+        <div class="mt-4">
+            <label for="pending_company_supervisor_name" class="block text-sm font-semibold text-[#1E2A78] mb-1">Company Supervisor Name</label>
+            <input id="pending_company_supervisor_name" type="text" name="pending_company_supervisor_name" value="{{ old('pending_company_supervisor_name') }}" required autocomplete="off"
+                class="w-full rounded-md border border-slate-300 bg-slate-50 px-3 py-2 text-sm
+                focus:border-[#0EA5B7] focus:ring-2 focus:ring-[#0EA5B7]/40 focus:outline-none">
+            @error('pending_company_supervisor_name')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
 
-<div class="mt-4">
-    <label for="pending_company_supervisor_email" class="block text-sm font-semibold text-[#1E2A78] mb-1">Company Supervisor Email <span class="font-normal text-slate-400">(optional)</span></label>
-    <input id="pending_company_supervisor_email" type="email" name="pending_company_supervisor_email" value="{{ old('pending_company_supervisor_email') }}"
-        class="w-full rounded-md border border-slate-300 bg-slate-50 px-3 py-2 text-sm
-            focus:border-[#0EA5B7] focus:ring-2 focus:ring-[#0EA5B7]/40 focus:outline-none">
-    <p class="mt-1 text-xs text-slate-500">If provided, we'll send them an invite to join and review your reports.</p>
-    @error('pending_company_supervisor_email')
-        <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
-    @enderror
-</div>
+        <div class="mt-4">
+            <label for="pending_company_supervisor_email" class="block text-sm font-semibold text-[#1E2A78] mb-1">Company Supervisor Email</label>
+            <input id="pending_company_supervisor_email" type="email" name="pending_company_supervisor_email" value="{{ old('pending_company_supervisor_email') }}" required autocomplete="off"
+                class="w-full rounded-md border border-slate-300 bg-slate-50 px-3 py-2 text-sm
+                focus:border-[#0EA5B7] focus:ring-2 focus:ring-[#0EA5B7]/40 focus:outline-none">
+            <p class="mt-1 text-xs text-slate-500">We'll send them an invite to join and review your reports.</p>
+            @error('pending_company_supervisor_email')
+                <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
+            @enderror
+        </div>
 
         
 

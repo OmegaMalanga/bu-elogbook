@@ -26,7 +26,7 @@ class UserController extends Controller
 
         $users = $query->orderBy('name')->paginate(25)->withQueryString();
 
-        $roles = ['student', 'company_supervisor', 'university_supervisor', 'admin'];
+        $roles = ['student', 'company_supervisor', 'university_supervisor', 'department_admin', 'admin'];
         $departments = \App\Models\Department::orderBy('name')->get();
 
         return view('admin.users.index', compact('users', 'roles', 'departments'));
@@ -35,21 +35,21 @@ class UserController extends Controller
 public function updateRole(Request $request, User $user)
 {
     $request->validate([
-        'role' => 'required|in:student,company_supervisor,university_supervisor,admin',
+        'role' => 'required|in:student,company_supervisor,university_supervisor,department_admin,admin',
         'department_id' => 'nullable|exists:departments,id',
     ]);
 
     $user->syncRoles([$request->role]);
 
-    if ($request->role === 'university_supervisor') {
-        $user->update(['department_id' => $request->department_id]);
-    }
+    if (in_array($request->role, ['university_supervisor', 'department_admin'])) {
+    $user->update(['department_id' => $request->department_id]);
+}
 
     return back()->with('success', $user->name . "'s role updated to " . $request->role);
 }
 public function create()
     {
-        $roles = ['student', 'company_supervisor', 'university_supervisor', 'admin'];
+       $roles = ['student', 'company_supervisor', 'university_supervisor', 'department_admin', 'admin'];
         $departments = \App\Models\Department::orderBy('name')->get();
 
         return view('admin.users.create', compact('roles', 'departments'));
@@ -60,7 +60,7 @@ public function create()
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'role' => 'required|in:student,company_supervisor,university_supervisor,admin',
+            'role' => 'required|in:student,company_supervisor,university_supervisor,department_admin,admin',
             'department_id' => 'nullable|exists:departments,id',
         ]);
 
@@ -70,9 +70,9 @@ public function create()
             'name' => $validated['name'],
             'email' => $validated['email'],
             'password' => bcrypt($password),
-            'department_id' => $validated['role'] === 'university_supervisor'
+            'department_id' => in_array($validated['role'], ['university_supervisor', 'department_admin'])
                 ? $validated['department_id']
-                : null,
+                    : null,
         ]);
 
         $user->assignRole($validated['role']);

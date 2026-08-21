@@ -46,7 +46,7 @@
                     </div>
 
                     <div class="mb-4" id="department-field"
-                        style="{{ old('role') === 'university_supervisor' ? '' : 'display:none;' }}">
+                        style="{{ in_array(old('role'), ['university_supervisor', 'department_admin']) ? '' : 'display:none;' }}">
                         <label class="block text-sm font-semibold text-[#1E2A78] mb-1">Engineering Department</label>
                         <select name="department_id"
                             class="w-full rounded-md border border-slate-300 bg-slate-50 focus:border-[#0EA5B7]">
@@ -72,7 +72,7 @@
     <script>
         document.getElementById('role-select').addEventListener('change', function () {
             document.getElementById('department-field').style.display =
-                this.value === 'university_supervisor' ? '' : 'none';
+               ['university_supervisor', 'department_admin'].includes(this.value) ? '' : 'none';
         });
     </script>
 </x-app-layout>

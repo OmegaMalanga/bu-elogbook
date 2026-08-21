@@ -40,3 +40,8 @@ Route::middleware(['auth', 'role:admin'])->prefix('admin')->group(function () {
     Route::get('/internships', [App\Http\Controllers\Admin\InternshipController::class, 'index'])->name('admin.internships.index');
     Route::patch('/internships/{internship}', [App\Http\Controllers\Admin\InternshipController::class, 'update'])->name('admin.internships.update');    
 });
+
+Route::middleware(['auth', 'role:department_admin'])->prefix('department')->group(function () {
+    Route::get('/internships', [App\Http\Controllers\DepartmentAdmin\InternshipController::class, 'index'])->name('department.internships.index');
+    Route::patch('/internships/{internship}', [App\Http\Controllers\DepartmentAdmin\InternshipController::class, 'update'])->name('department.internships.update');
+});

@@ -42,8 +42,8 @@ class RegisteredUserController extends Controller
         'department_id' => ['required', 'exists:departments,id'],
         'year_of_study' => ['required', 'integer', 'in:2,3'],
         'company_name' => ['required', 'string', 'max:255'],
-        'pending_company_supervisor_name' => ['nullable', 'string', 'max:255'],
-        'pending_company_supervisor_email' => ['nullable', 'string', 'lowercase', 'email', 'max:255'],
+        'pending_company_supervisor_name' => ['required', 'string', 'max:255'],
+        'pending_company_supervisor_email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
         
     ]);
 

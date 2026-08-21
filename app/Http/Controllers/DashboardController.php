@@ -71,7 +71,27 @@ class DashboardController extends Controller
 
             return view('dashboard', compact('pendingEntries', 'pendingCount', 'internships'));
         }
+        if ($user->hasRole('department_admin')) {
+    $department = $user->department;
 
+       $internships = \App\Models\Internship::where('department_id', $user->department_id)
+        ->with('student')
+        ->get();
+
+    $totalStudents = $internships->count();
+    $unassignedCount = $internships->whereNull('university_supervisor_id')->count();
+
+    $pendingReviews = \App\Models\LogEntry::whereIn('status', ['submitted', 'company_reviewed'])
+        ->whereHas('internship', function ($q) use ($user) {
+            $q->where('department_id', $user->department_id);
+        })
+        ->count();
+
+    $year2Internships = $internships->where('year_of_study', 2);
+    $year3Internships = $internships->where('year_of_study', 3);
+
+    return view('dashboard', compact('department', 'internships', 'totalStudents', 'unassignedCount', 'pendingReviews', 'year2Internships', 'year3Internships'));
+}
    if ($user->hasRole('admin')) {
     $departments = \App\Models\Department::orderBy('name')->get();
 
